@@ -1,0 +1,25 @@
+# Root-level ignores. Backend and frontend build/dependency outputs
+# are handled by backend/.gitignore and frontend/.gitignore.
+
+# Docker Compose environment (secrets); .env.example is the template
+.env
+.env.*
+!.env.example
+
+# Local compose overrides
+docker-compose.override.yml
+compose.override.yml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors (shared .vscode/settings.json stays tracked)
+.idea/
+*.swp
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Logs
+*.log

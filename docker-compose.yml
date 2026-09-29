@@ -1,0 +1,86 @@
+# DualRead development environment.
+# Image versions are pinned on purpose; bump them deliberately.
+name: dualread
+
+services:
+  app:
+    build:
+      context: ./backend
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: dualread-app:dev
+    restart: unless-stopped
+    environment:
+      APP_URL: ${APP_URL:-http://localhost:8000}
+      API_RATE_LIMIT: ${API_RATE_LIMIT:-120}
+      DB_CONNECTION: pgsql
+      # Compose service name, never localhost.
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:?set DB_DATABASE in .env}
+      DB_USERNAME: ${DB_USERNAME:?set DB_USERNAME in .env}
+      DB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "php -r 'exit(@file_get_contents(\"http://127.0.0.1:8000/up\") === false ? 1 : 0);'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    networks:
+      - dualread
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: dualread-frontend:dev
+    restart: unless-stopped
+    environment:
+      # SSR requests go container-to-container; browser requests go through the host port.
+      NUXT_API_BASE_SERVER: ${NUXT_API_BASE_SERVER:-http://app:8000/api/v1}
+      NUXT_PUBLIC_API_BASE: ${NUXT_PUBLIC_API_BASE:-http://localhost:8000/api/v1}
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - app
+    networks:
+      - dualread
+
+  db:
+    image: postgres:17.11-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:?set DB_DATABASE in .env}
+      POSTGRES_USER: ${DB_USERNAME:?set DB_USERNAME in .env}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      # Host access for DB tools only; bound to loopback.
+      - "127.0.0.1:${DB_FORWARD_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - dualread
+
+volumes:
+  # Named volume: survives `docker compose down` (only `down -v` deletes it).
+  db-data:
+
+networks:
+  dualread:

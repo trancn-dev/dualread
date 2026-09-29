@@ -1,0 +1,92 @@
+{
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+  },
+  "[perl]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.defaultColorDecorators": "never",
+    "editor.quickSuggestions": {
+      "strings": "on"
+    }
+  },
+  // "editor.formatOnSave": true,
+  "editor.detectIndentation": false,
+
+  // --- Prettier options ---
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.vueIndentScriptAndStyle": true,
+  // vue tự đông thụt lề trong <script> và <style>
+
+  // Cài đặt chung: Đảm bảo Tab size mặc định là 2
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "chat.tools.terminal.autoApprove": {
+    "npm install": true
+  }, // Quan trọng: Sử dụng khoảng trắng thay vì Tab
+
+  // // Cài đặt đặc biệt cho file có ngôn ngữ Shell Script
+  // "[shellscript]": {
+  //   "editor.tabSize": 2,
+  //   "editor.insertSpaces": true,
+  //   "files.insertFinalNewline": true
+  // },
+
+  // "files.insertFinalNewline": true
+
+  "files.associations": {
+    "*.tpl": "html"
+  },
+  "files.autoGuessEncoding": true,
+    "files.encoding": "utf8",
+    "files.defaultLanguageProvider.encoding": "utf8",
+    "files.eol": "\n",
+    "waveDashUnify.enableConvert": true,
+    "waveDashUnify.fullwidthTildeToWaveDash": true,
+    //xoá khoảng trắng thừa ở cuối dòng
+    // "files.trimTrailingWhitespace": true,
+    "search.quickOpen.includeHistory": false,
+    "python.analysis.typeEvaluation.analyzeUnannotatedFunctions": true
+}

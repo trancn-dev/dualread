@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Structured data for AI clients and crawlers: /api/v1/media on the API host.
